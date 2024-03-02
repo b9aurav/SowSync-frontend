@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import { MdAdd, MdDelete, MdEdit } from "react-icons/md";
 import AddScheduleModal from "../components/AddScheduleModal";
+import EditFarmModal from "../components/EditFarmModal";
 
 type Props = {};
 
@@ -10,6 +11,8 @@ const Farm = (props: Props) => {
   const [farms, setFarms] = useState({});
   const [selectedFarm, setSelectedFarm] = useState("");
   const [showAddScheduleModal, setShowAddScheduleModal] = useState(false);
+  const [showEditFarmModal, setShowEditFarmModal] = useState(false);
+  const [selectedFarmData, setSelectedFarmData] = useState({});
 
   useEffect(() => {
     getFarms();
@@ -56,6 +59,7 @@ const Farm = (props: Props) => {
 
   return (
     <main className="w-screen">
+      <EditFarmModal show={showEditFarmModal} data={selectedFarmData} onSave={getFarms} onClose={() => setShowEditFarmModal(false)}/>
       <AddScheduleModal show={showAddScheduleModal} farmId={selectedFarm} onClose={() => setShowAddScheduleModal(false)} />
       <NavBar />
       <div className="w-screen max-h-[90%] flex p-4 flex-col items-center mt-16 ">
@@ -92,6 +96,10 @@ const Farm = (props: Props) => {
                           <button
                             type="button"
                             className="btn-icon variant-filled btn-sm"
+                            onClick={() => {
+                              setSelectedFarmData(farm);
+                              setShowEditFarmModal(true);
+                            }}
                           >
                             <MdEdit />
                           </button>
