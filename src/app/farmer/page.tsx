@@ -59,6 +59,18 @@ const Farmer = (props: Props) => {
       .catch((error) => console.error("Error:", error));
   };
 
+  const getFarmersGrowingCrop = () => {
+    fetch(process.env.API_URL + "/getFarmersGrowingCrop", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setFarmers(data))
+      .catch((error) => console.error("Error:", error));
+  };
+
   return (
     <main className="w-screen">
       <AddFarmerModal
@@ -89,6 +101,10 @@ const Farmer = (props: Props) => {
           </span>
           <span>Add</span>
         </button>
+        <label className="flex items-center space-x-2 mb-4">
+          <input className="checkbox" type="checkbox" onClick={(e) => {e.currentTarget.checked ? getFarmersGrowingCrop() : getFarmers()}}/>
+          <p>Farmers growing crops</p>
+        </label>
         <div className="table-container border border-[#2b334c] ">
           <table className="table table-hover">
             <thead>

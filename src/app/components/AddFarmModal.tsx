@@ -30,9 +30,9 @@ const AddFarmModal = (props: Props) => {
         area,
         village,
         cropGrown,
-        sowingDate,
         country,
         farmerId: props.farmerId,
+        ...(sowingDate !== "" ? { sowingDate } : {})
       }),
     })
       .then((res) => res.json())
