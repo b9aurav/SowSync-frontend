@@ -1,7 +1,7 @@
 "use client";
 import React, { use, useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
-import { MdDelete, MdEdit } from "react-icons/md";
+import { MdAdd, MdDelete, MdEdit } from "react-icons/md";
 
 type Props = {};
 
@@ -9,6 +9,10 @@ const Farmer = (props: Props) => {
   const [farmers, setFarmers] = useState({});
 
   useEffect(() => {
+    getFarmers();
+  }, []);
+
+  const getFarmers = () => {
     fetch(process.env.API_URL + "/getFarmers", {
       method: "POST",
       headers: {
@@ -18,13 +22,46 @@ const Farmer = (props: Props) => {
       .then((res) => res.json())
       .then((data) => setFarmers(data))
       .catch((error) => console.error("Error:", error));
-  }, []);
+  };
+
+  const handleDelete = (id: string) => {
+    if (
+      !window.confirm(
+        "Are you sure you want to delete this farmer? It will delete all farms and schedules associated with it!"
+      )
+    )
+      return;
+
+    fetch(process.env.API_URL + "/removeFarmer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.id) {
+          alert("Farmer deleted successfully");
+          getFarmers();
+        } else {
+          console.error("Error:", data.error);
+        }
+      })
+      .catch((error) => console.error("Error:", error));
+  };
 
   return (
-    <main className="w-screen h-screen">
+    <main className="w-screen">
       <NavBar />
-      <div className="w-screen h-screen flex justify-center items-center p-4">
-        <div className="table-container border border-[#2b334c] max-h-[80%]">
+      <div className="w-screen max-h-[90%] flex p-4 flex-col items-center mt-16 ">
+        <button type="button" className="btn variant-filled m-2">
+          <span>
+            <MdAdd />
+          </span>
+          <span>Add</span>
+        </button>
+        <div className="table-container border border-[#2b334c] ">
           <table className="table table-hover">
             <thead>
               <tr>
@@ -36,32 +73,35 @@ const Farmer = (props: Props) => {
               </tr>
             </thead>
             <tbody>
-            {Object.values(farmers as {[key: string]: any}).map((farmer: any, index: number) => {
-                return (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{farmer.name}</td>
-                    <td>{farmer.phoneNumber}</td>
-                    <td>{farmer.language}</td>
-                    <td>
-                      <div className="flex gap-2">
-                      <button
-                        type="button"
-                        className="btn-icon variant-filled btn-sm"
-                      >
-                        <MdEdit />
-                      </button>
-                      <button
-                        type="button"
-                        className="btn-icon variant-filled btn-sm"
-                      >
-                        <MdDelete />
-                      </button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
+              {Object.values(farmers as { [key: string]: any }).map(
+                (farmer: any, index: number) => {
+                  return (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{farmer.name}</td>
+                      <td>{farmer.phoneNumber}</td>
+                      <td>{farmer.language}</td>
+                      <td>
+                        <div className="flex gap-2">
+                          <button
+                            type="button"
+                            className="btn-icon variant-filled btn-sm"
+                          >
+                            <MdEdit />
+                          </button>
+                          <button
+                            type="button"
+                            className="btn-icon variant-filled btn-sm"
+                            onClick={() => handleDelete(farmer.id)}
+                          >
+                            <MdDelete />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                }
+              )}
             </tbody>
           </table>
         </div>
