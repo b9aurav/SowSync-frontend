@@ -2,11 +2,14 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import { MdAdd, MdDelete, MdEdit } from "react-icons/md";
+import AddScheduleModal from "../components/AddScheduleModal";
 
 type Props = {};
 
 const Farm = (props: Props) => {
   const [farms, setFarms] = useState({});
+  const [selectedFarm, setSelectedFarm] = useState("");
+  const [showAddScheduleModal, setShowAddScheduleModal] = useState(false);
 
   useEffect(() => {
     getFarms();
@@ -53,6 +56,7 @@ const Farm = (props: Props) => {
 
   return (
     <main className="w-screen">
+      <AddScheduleModal show={showAddScheduleModal} farmId={selectedFarm} onClose={() => setShowAddScheduleModal(false)} />
       <NavBar />
       <div className="w-screen max-h-[90%] flex p-4 flex-col items-center mt-16 ">
         <div className="table-container border border-[#2b334c] ">
@@ -97,6 +101,19 @@ const Farm = (props: Props) => {
                             onClick={() => handleDelete(farm.id)}
                           >
                             <MdDelete />
+                          </button>
+                          <button
+                            type="button"
+                            className="btn variant-filled"
+                            onClick={() => {
+                              setSelectedFarm(farm.id);
+                              setShowAddScheduleModal(true);
+                            }}
+                          >
+                            <span>
+                              <MdAdd />
+                            </span>
+                            <span>Schedule</span>
                           </button>
                         </div>
                       </td>
