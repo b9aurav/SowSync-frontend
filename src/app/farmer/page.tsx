@@ -4,6 +4,7 @@ import NavBar from "../components/NavBar";
 import { MdAdd, MdDelete, MdEdit } from "react-icons/md";
 import AddFarmerModal from "../components/AddFarmerModal";
 import AddFarmModal from "../components/AddFarmModal";
+import EditFarmerModal from "../components/EditFarmerModal";
 
 type Props = {};
 
@@ -12,6 +13,8 @@ const Farmer = (props: Props) => {
   const [selectedFarmer, setSelectedFarmer] = useState("");
   const [showAddFarmerModal, setShowAddFarmerModal] = useState(false);
   const [showAddFarmModal, setShowAddFarmModal] = useState(false);
+  const [showEditFarmerModal, setShowEditFarmerModal] = useState(false);
+  const [selectedFarmerData, setSelectedFarmerData] = useState({});
 
   useEffect(() => {
     getFarmers();
@@ -68,6 +71,12 @@ const Farmer = (props: Props) => {
         onClose={() => setShowAddFarmModal(false)}
         farmerId={selectedFarmer}
       />
+      <EditFarmerModal
+        show={showEditFarmerModal}
+        data={selectedFarmerData}
+        onClose={() => setShowEditFarmerModal(false)}
+        onSave={getFarmers}
+      />
       <NavBar />
       <div className="w-screen max-h-[90%] flex p-4 flex-col items-center mt-16 ">
         <button
@@ -107,6 +116,10 @@ const Farmer = (props: Props) => {
                           <button
                             type="button"
                             className="btn-icon variant-filled btn-sm"
+                            onClick={() => {
+                              setSelectedFarmerData(farmer);
+                              setShowEditFarmerModal(true);
+                            }}
                           >
                             <MdEdit />
                           </button>
