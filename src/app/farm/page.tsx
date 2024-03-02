@@ -55,17 +55,13 @@ const Farm = (props: Props) => {
     <main className="w-screen">
       <NavBar />
       <div className="w-screen max-h-[90%] flex p-4 flex-col items-center mt-16 ">
-        <button type="button" className="btn variant-filled m-2">
-          <span>
-            <MdAdd />
-          </span>
-          <span>Add</span>
-        </button>
         <div className="table-container border border-[#2b334c] ">
           <table className="table table-hover">
             <thead>
               <tr>
                 <td>#</td>
+                <td>Farm ID</td>
+                <td>Farmer ID</td>
                 <td>Crop Grown</td>
                 <td>Sowing Date</td>
                 <td>Area</td>
@@ -80,6 +76,8 @@ const Farm = (props: Props) => {
                   return (
                     <tr key={index}>
                       <td>{index + 1}</td>
+                      <td>{farm.id}</td>
+                      <td>{farm.farmerId}</td>
                       <td>{farm.cropGrown}</td>
                       <td>{farm.sowingDate.split("T")[0]}</td>
                       <td>{farm.area}</td>

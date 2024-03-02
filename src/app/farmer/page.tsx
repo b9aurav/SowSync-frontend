@@ -3,12 +3,15 @@ import React, { use, useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import { MdAdd, MdDelete, MdEdit } from "react-icons/md";
 import AddFarmerModal from "../components/AddFarmerModal";
+import AddFarmModal from "../components/AddFarmModal";
 
 type Props = {};
 
 const Farmer = (props: Props) => {
   const [farmers, setFarmers] = useState({});
-  const [showModal, setShowModal] = useState(false)
+  const [selectedFarmer, setSelectedFarmer] = useState("");
+  const [showAddFarmerModal, setShowAddFarmerModal] = useState(false);
+  const [showAddFarmModal, setShowAddFarmModal] = useState(false);
 
   useEffect(() => {
     getFarmers();
@@ -55,10 +58,23 @@ const Farmer = (props: Props) => {
 
   return (
     <main className="w-screen">
-      <AddFarmerModal show={showModal} onClose={() => setShowModal(false)} onSave={getFarmers}/>
+      <AddFarmerModal
+        show={showAddFarmerModal}
+        onClose={() => setShowAddFarmerModal(false)}
+        onSave={getFarmers}
+      />
+      <AddFarmModal
+        show={showAddFarmModal}
+        onClose={() => setShowAddFarmModal(false)}
+        farmerId={selectedFarmer}
+      />
       <NavBar />
       <div className="w-screen max-h-[90%] flex p-4 flex-col items-center mt-16 ">
-        <button type="button" className="btn variant-filled m-2" onClick={() => setShowModal(true)}>
+        <button
+          type="button"
+          className="btn variant-filled mb-4"
+          onClick={() => setShowAddFarmerModal(true)}
+        >
           <span>
             <MdAdd />
           </span>
@@ -69,6 +85,7 @@ const Farmer = (props: Props) => {
             <thead>
               <tr>
                 <td>#</td>
+                <td>Farmer ID</td>
                 <td>Name</td>
                 <td>Phone</td>
                 <td>Language</td>
@@ -81,6 +98,7 @@ const Farmer = (props: Props) => {
                   return (
                     <tr key={index}>
                       <td>{index + 1}</td>
+                      <td>{farmer.id}</td>
                       <td>{farmer.name}</td>
                       <td>{farmer.phoneNumber}</td>
                       <td>{farmer.language}</td>
@@ -98,6 +116,19 @@ const Farmer = (props: Props) => {
                             onClick={() => handleDelete(farmer.id)}
                           >
                             <MdDelete />
+                          </button>
+                          <button
+                            type="button"
+                            className="btn variant-filled"
+                            onClick={() => {
+                              setSelectedFarmer(farmer.id);
+                              setShowAddFarmModal(true);
+                            }}
+                          >
+                            <span>
+                              <MdAdd />
+                            </span>
+                            <span>Farm</span>
                           </button>
                         </div>
                       </td>

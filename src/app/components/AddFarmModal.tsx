@@ -1,41 +1,45 @@
 import React, { useState } from "react";
 
 type Props = {
+  farmerId: string;
   show: boolean;
   onClose: () => void;
-  onSave: () => void;
 };
 
-const AddFarmerModal = (props: Props) => {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [language, setLanguage] = useState("");
+const AddFarmModal = (props: Props) => {
+  const [area, setArea] = useState(0);
+  const [village, setVillage] = useState("");
+  const [cropGrown, setCropGrown] = useState("");
+  const [sowingDate, setSowingDate] = useState("");
+  const [country, setCountry] = useState("");
 
   if (!props.show) return null;
 
   const handleSave = () => {
-    if (!name || !phone || !language) {
+    if (!area || !village || !cropGrown || !sowingDate || !country) {
       alert("All fields are required");
       return;
     }
     
-    fetch(process.env.API_URL + "/addFarmer", {
+    fetch(process.env.API_URL + "/addFarm", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: name,
-        phoneNumber: phone,
-        language: language,
+        area,
+        village,
+        cropGrown,
+        sowingDate,
+        country,
+        farmerId: props.farmerId,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.id) {
-          alert("Farmer added successfully");
+          alert("Farm added successfully");
           props.onClose();
-          props.onSave();
         } else {
           console.error("Error:", data.error);
         }
@@ -47,30 +51,48 @@ const AddFarmerModal = (props: Props) => {
     <div className=" z-50 fixed w-full h-full top-0 left-0 variant-glass-surface flex items-center justify-center">
       <div className="card p-4">
         <label className="label mt-2">
-          <span>Name</span>
+          <span>Crop Grown</span>
           <input
             className="input"
             type="text"
-            placeholder="Name"
-            onChange={(e) => setName(e.target.value)}
+            placeholder="Crop Grown"
+            onChange={(e) => setCropGrown(e.target.value)}
           />
         </label>
         <label className="label mt-2">
-          <span>Phone</span>
+          <span>Sowing Date</span>
+          <input
+            className="input"
+            type="date"
+            placeholder="Sowing Date"
+            onChange={(e) => setSowingDate(e.target.value)}
+          />
+        </label>
+        <label className="label mt-2">
+          <span>Area</span>
           <input
             className="input"
             type="number"
-            placeholder="Phone"
-            onChange={(e) => setPhone(e.target.value)}
+            placeholder="Area"
+            onChange={(e) => setArea(parseFloat(e.target.value))}
           />
         </label>
         <label className="label mt-2">
-          <span>Language</span>
+          <span>Village</span>
           <input
             className="input"
             type="text"
-            placeholder="Language"
-            onChange={(e) => setLanguage(e.target.value)}
+            placeholder="Village"
+            onChange={(e) => setVillage(e.target.value)}
+          />
+        </label>
+        <label className="label mt-2">
+          <span>Country</span>
+          <input
+            className="input"
+            type="text"
+            placeholder="Country"
+            onChange={(e) => setCountry(e.target.value)}
           />
         </label>
         <div className="flex justify-end gap-2 mt-4">
@@ -94,4 +116,4 @@ const AddFarmerModal = (props: Props) => {
   );
 };
 
-export default AddFarmerModal;
+export default AddFarmModal;
