@@ -1,10 +1,17 @@
 import type { Config } from "tailwindcss";
+import { skeleton } from '@skeletonlabs/tw-plugin';
+import { join } from "path";
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    join(require.resolve(
+			'@skeletonlabs/skeleton'),
+			'../**/*.{html,js,svelte,ts}'
+		)
   ],
   theme: {
     extend: {
@@ -15,6 +22,10 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    skeleton({
+      themes: { preset: [ "skeleton" ] }
+    })
+  ],
 };
 export default config;
