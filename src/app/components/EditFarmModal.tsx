@@ -51,7 +51,7 @@ const EditFarmModal = (props: Props) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.id) {
-          alert("Farmer updated successfully");
+          alert("Farm updated successfully");
           props.onClose();
           props.onSave();
         } else {

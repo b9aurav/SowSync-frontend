@@ -1,12 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
-import { MdAdd, MdDelete, MdEdit } from "react-icons/md";
+import { MdDelete, MdEdit } from "react-icons/md";
+import EditScheduleModal from "../components/EditScheduleModal";
 
 type Props = {};
 
 const Schedule = (props: Props) => {
   const [schedules, setSchedules] = useState({});
+  const [showEditScheduleModal, setShowEditScheduleModal] = useState(false);
+  const [selectedScheduleData, setSelectedScheduleData] = useState({});
 
   useEffect(() => {
     getSchedules();
@@ -49,6 +52,7 @@ const Schedule = (props: Props) => {
 
   return (
     <main className="w-screen">
+      <EditScheduleModal show={showEditScheduleModal} data={selectedScheduleData} onClose={() => setShowEditScheduleModal(false)} onSave={getSchedules} />
       <NavBar />
       <div className="w-screen max-h-[90%] flex p-4 flex-col items-center mt-16 ">
         <div className="table-container border border-[#2b334c] ">
@@ -80,6 +84,10 @@ const Schedule = (props: Props) => {
                           <button
                             type="button"
                             className="btn-icon variant-filled btn-sm"
+                            onClick={() => {
+                              setSelectedScheduleData(schedule);
+                              setShowEditScheduleModal(true);
+                            }}
                           >
                             <MdEdit />
                           </button>
