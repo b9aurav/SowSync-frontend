@@ -1,10 +1,11 @@
 "use client";
 import React, { use, useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
-import { MdAdd, MdDelete, MdEdit } from "react-icons/md";
+import { MdAdd, MdCalculate, MdDelete, MdEdit } from "react-icons/md";
 import AddFarmerModal from "../components/AddFarmerModal";
 import AddFarmModal from "../components/AddFarmModal";
 import EditFarmerModal from "../components/EditFarmerModal";
+import CalculateBillModal from "../components/CalculateBillModal";
 
 type Props = {};
 
@@ -15,6 +16,7 @@ const Farmer = (props: Props) => {
   const [showAddFarmModal, setShowAddFarmModal] = useState(false);
   const [showEditFarmerModal, setShowEditFarmerModal] = useState(false);
   const [selectedFarmerData, setSelectedFarmerData] = useState({});
+  const [showBillModal, setShowBillModal] = useState(false);
 
   useEffect(() => {
     getFarmers();
@@ -89,6 +91,11 @@ const Farmer = (props: Props) => {
         onClose={() => setShowEditFarmerModal(false)}
         onSave={getFarmers}
       />
+      <CalculateBillModal
+        show={showBillModal}
+        farmerId={selectedFarmer}
+        onClose={() => setShowBillModal(false)}
+      />
       <NavBar />
       <div className="w-screen max-h-[90%] flex p-4 flex-col items-center mt-16 ">
         <button
@@ -102,7 +109,13 @@ const Farmer = (props: Props) => {
           <span>Add</span>
         </button>
         <label className="flex items-center space-x-2 mb-4">
-          <input className="checkbox" type="checkbox" onClick={(e) => {e.currentTarget.checked ? getFarmersGrowingCrop() : getFarmers()}}/>
+          <input
+            className="checkbox"
+            type="checkbox"
+            onClick={(e) => {
+              e.currentTarget.checked ? getFarmersGrowingCrop() : getFarmers();
+            }}
+          />
           <p>Farmers growing crops</p>
         </label>
         <div className="table-container border border-[#2b334c] ">
@@ -145,6 +158,19 @@ const Farmer = (props: Props) => {
                             onClick={() => handleDelete(farmer.id)}
                           >
                             <MdDelete />
+                          </button>
+                          <button
+                            type="button"
+                            className="btn variant-filled"
+                            onClick={() => {
+                              setSelectedFarmer(farmer.id);
+                              setShowBillModal(true);
+                            }}
+                          >
+                            <span>
+                              <MdCalculate />
+                            </span>
+                            <span>Bill</span>
                           </button>
                           <button
                             type="button"
