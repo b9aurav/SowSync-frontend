@@ -16,7 +16,7 @@ const AddFarmModal = (props: Props) => {
   if (!props.show) return null;
 
   const handleSave = () => {
-    if (!area || !village || !cropGrown || !sowingDate || !country) {
+    if (!area || !village || !country) {
       alert("All fields are required");
       return;
     }

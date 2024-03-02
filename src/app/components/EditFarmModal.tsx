@@ -15,7 +15,7 @@ const EditFarmModal = (props: Props) => {
   const [country, setCountry] = useState("");
 
   useEffect(() => {
-    if (props.data.area && props.data.village && props.data.cropGrown && props.data.sowingDate && props.data.country) {
+    if (props.data.area && props.data.village && props.data.country) {
       setArea(props.data.area);
       setVillage(props.data.village);
       setCropGrown(props.data.cropGrown);
@@ -24,11 +24,10 @@ const EditFarmModal = (props: Props) => {
     }
   }, [props.data.area, props.data.village, props.data.cropGrown, props.data.sowingDate, props.data.country]);
 
-  console.log(props.data);
   if (!props.show) return null;
 
   const handleSave = () => {
-    if (!area || !village || !cropGrown || !sowingDate || !country) {
+    if (!area || !village || !country) {
       alert("All fields are required");
       return;
     }
@@ -42,10 +41,10 @@ const EditFarmModal = (props: Props) => {
         area,
         village,
         cropGrown,
-        sowingDate,
         country,
         farmerId: props.data.farmerId,
         id: props.data.id,
+        ...(sowingDate !== "" ? { sowingDate } : {})
       }),
     })
       .then((res) => res.json())
@@ -80,7 +79,7 @@ const EditFarmModal = (props: Props) => {
             className="input"
             type="date"
             placeholder="Sowing Date"
-            value={sowingDate.split("T")[0]}
+            value={ sowingDate ? sowingDate.split("T")[0] : "" }
             onChange={(e) => setSowingDate(e.target.value)}
           />
         </label>

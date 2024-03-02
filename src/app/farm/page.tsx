@@ -87,7 +87,7 @@ const Farm = (props: Props) => {
                       <td>{farm.id}</td>
                       <td>{farm.farmerId}</td>
                       <td>{farm.cropGrown}</td>
-                      <td>{farm.sowingDate.split("T")[0]}</td>
+                      <td>{ farm.sowingDate ? farm.sowingDate.split("T")[0] : "" }</td>
                       <td>{farm.area}</td>
                       <td>{farm.village}</td>
                       <td>{farm.country}</td>
