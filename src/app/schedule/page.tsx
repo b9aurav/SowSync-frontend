@@ -50,11 +50,32 @@ const Schedule = (props: Props) => {
       .catch((error) => console.error("Error:", error));
   };
 
+  const getSchedulesDue = () => {
+    fetch(process.env.API_URL + "/getSchedulesDue", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setSchedules(data))
+      .catch((error) => console.error("Error:", error));
+  }
+
   return (
     <main className="w-screen">
-      <EditScheduleModal show={showEditScheduleModal} data={selectedScheduleData} onClose={() => setShowEditScheduleModal(false)} onSave={getSchedules} />
+      <EditScheduleModal
+        show={showEditScheduleModal}
+        data={selectedScheduleData}
+        onClose={() => setShowEditScheduleModal(false)}
+        onSave={getSchedules}
+      />
       <NavBar />
       <div className="w-screen max-h-[90%] flex p-4 flex-col items-center mt-16 ">
+        <label className="flex items-center space-x-2 mb-4">
+          <input className="checkbox" type="checkbox" onClick={(e) => {e.currentTarget.checked ? getSchedulesDue() : getSchedules()}}/>
+          <p>Schedules due for today/tomorrow</p>
+        </label>
         <div className="table-container border border-[#2b334c] ">
           <table className="table table-hover">
             <thead>
