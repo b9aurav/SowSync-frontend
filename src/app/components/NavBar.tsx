@@ -11,7 +11,7 @@ const NavBar = (props: Props) => {
       <div className="btn-group variant-filled">
         <button onClick={() => router.push('/farmer')}>Farmers</button>
         <button onClick={() => router.push('/farm')}>Farms</button>
-        <button>Schedules</button>
+        <button onClick={() => router.push('/schedule')}>Schedules</button>
       </div>
     </div>
   );

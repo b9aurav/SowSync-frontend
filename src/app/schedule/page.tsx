@@ -5,18 +5,18 @@ import { MdDelete, MdEdit } from "react-icons/md";
 
 type Props = {};
 
-const Farm = (props: Props) => {
-  const [farms, setFarms] = useState({});
+const Schedule = (props: Props) => {
+  const [schedules, setSchedules] = useState({});
 
   useEffect(() => {
-    fetch(process.env.API_URL + "/getFarms", {
+    fetch(process.env.API_URL + "/getSchedules", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
     })
       .then((res) => res.json())
-      .then((data) => setFarms(data))
+      .then((data) => setSchedules(data))
       .catch((error) => console.error("Error:", error));
   }, []);
 
@@ -29,24 +29,22 @@ const Farm = (props: Props) => {
             <thead>
               <tr>
                 <td>#</td>
-                <td>Crop Grown</td>
-                <td>Sowing Date</td>
-                <td>Area</td>
-                <td>Village</td>
-                <td>Country</td>
+                <td>Days after Sowing</td>
+                <td>Fertiliser</td>
+                <td>Quantity</td>
+                <td>Quantity Unit</td>
                 <td>Actions</td>
               </tr>
             </thead>
             <tbody>
-            {Object.values(farms as {[key: string]: any}).map((farm: any, index: number) => {
+            {Object.values(schedules as {[key: string]: any}).map((schedule: any, index: number) => {
                 return (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{farm.cropGrown}</td>
-                    <td>{farm.sowingDate.split('T')[0]}</td>
-                    <td>{farm.area}</td>
-                    <td>{farm.village}</td>
-                    <td>{farm.country}</td>
+                    <td>{schedule.daysAfterSowing}</td>
+                    <td>{schedule.fertiliser}</td>
+                    <td>{schedule.quantity}</td>
+                    <td>{schedule.quantityUnit}</td>
                     <td>
                       <div className="flex gap-2">
                       <button
@@ -74,4 +72,4 @@ const Farm = (props: Props) => {
   );
 };
 
-export default Farm;
+export default Schedule;
