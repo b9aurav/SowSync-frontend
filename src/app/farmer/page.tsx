@@ -2,11 +2,13 @@
 import React, { use, useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import { MdAdd, MdDelete, MdEdit } from "react-icons/md";
+import AddFarmerModal from "../components/AddFarmerModal";
 
 type Props = {};
 
 const Farmer = (props: Props) => {
   const [farmers, setFarmers] = useState({});
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     getFarmers();
@@ -53,9 +55,10 @@ const Farmer = (props: Props) => {
 
   return (
     <main className="w-screen">
+      <AddFarmerModal show={showModal} onClose={() => setShowModal(false)} onSave={getFarmers}/>
       <NavBar />
       <div className="w-screen max-h-[90%] flex p-4 flex-col items-center mt-16 ">
-        <button type="button" className="btn variant-filled m-2">
+        <button type="button" className="btn variant-filled m-2" onClick={() => setShowModal(true)}>
           <span>
             <MdAdd />
           </span>
