@@ -95,7 +95,7 @@ const Farm = (props: Props) => {
                         <div className="flex gap-2">
                           <button
                             type="button"
-                            className="btn-icon variant-filled btn-sm"
+                            className="btn-icon variant-filled-secondary btn-sm"
                             onClick={() => {
                               setSelectedFarmData(farm);
                               setShowEditFarmModal(true);
@@ -105,14 +105,14 @@ const Farm = (props: Props) => {
                           </button>
                           <button
                             type="button"
-                            className="btn-icon variant-filled btn-sm"
+                            className="btn-icon variant-filled-primary btn-sm"
                             onClick={() => handleDelete(farm.id)}
                           >
                             <MdDelete />
                           </button>
                           <button
                             type="button"
-                            className="btn variant-filled"
+                            className="btn variant-filled-success"
                             onClick={() => {
                               setSelectedFarm(farm.id);
                               setShowAddScheduleModal(true);

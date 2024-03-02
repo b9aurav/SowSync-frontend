@@ -104,7 +104,7 @@ const Schedule = (props: Props) => {
                         <div className="flex gap-2">
                           <button
                             type="button"
-                            className="btn-icon variant-filled btn-sm"
+                            className="btn-icon variant-filled-secondary btn-sm"
                             onClick={() => {
                               setSelectedScheduleData(schedule);
                               setShowEditScheduleModal(true);
@@ -114,7 +114,7 @@ const Schedule = (props: Props) => {
                           </button>
                           <button
                             type="button"
-                            className="btn-icon variant-filled btn-sm"
+                            className="btn-icon variant-filled-primary btn-sm"
                             onClick={() => handleDelete(schedule.id)}
                           >
                             <MdDelete />

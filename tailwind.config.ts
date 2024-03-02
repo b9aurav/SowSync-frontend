@@ -26,7 +26,7 @@ const config: Config = {
   plugins: [
     forms,
     skeleton({
-      themes: { preset: [ "skeleton" ] }
+      themes: { preset: [ "crimson" ] }
     })
   ],
 };

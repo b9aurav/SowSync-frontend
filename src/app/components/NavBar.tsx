@@ -1,6 +1,7 @@
 "use client"
 import { useRouter } from "next/navigation";
 import React from "react";
+import ThemeToggleButton from "./ThemeToggleButton";
 
 type Props = {};
 
@@ -13,6 +14,7 @@ const NavBar = (props: Props) => {
         <button onClick={() => router.push('/farm')}>Farms</button>
         <button onClick={() => router.push('/schedule')}>Schedules</button>
       </div>
+      <ThemeToggleButton onToggle={()=>{document.querySelector('html')?.classList.toggle('dark')}}/>
     </div>
   );
 };

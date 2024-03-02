@@ -144,7 +144,7 @@ const Farmer = (props: Props) => {
                         <div className="flex gap-2">
                           <button
                             type="button"
-                            className="btn-icon variant-filled btn-sm"
+                            className="btn-icon variant-filled-secondary btn-sm"
                             onClick={() => {
                               setSelectedFarmerData(farmer);
                               setShowEditFarmerModal(true);
@@ -154,27 +154,14 @@ const Farmer = (props: Props) => {
                           </button>
                           <button
                             type="button"
-                            className="btn-icon variant-filled btn-sm"
+                            className="btn-icon variant-filled-primary btn-sm"
                             onClick={() => handleDelete(farmer.id)}
                           >
                             <MdDelete />
                           </button>
                           <button
                             type="button"
-                            className="btn variant-filled"
-                            onClick={() => {
-                              setSelectedFarmer(farmer.id);
-                              setShowBillModal(true);
-                            }}
-                          >
-                            <span>
-                              <MdCalculate />
-                            </span>
-                            <span>Bill</span>
-                          </button>
-                          <button
-                            type="button"
-                            className="btn variant-filled"
+                            className="btn variant-filled-success"
                             onClick={() => {
                               setSelectedFarmer(farmer.id);
                               setShowAddFarmModal(true);
@@ -184,6 +171,19 @@ const Farmer = (props: Props) => {
                               <MdAdd />
                             </span>
                             <span>Farm</span>
+                          </button>
+                          <button
+                            type="button"
+                            className="btn variant-filled-surface"
+                            onClick={() => {
+                              setSelectedFarmer(farmer.id);
+                              setShowBillModal(true);
+                            }}
+                          >
+                            <span>
+                              <MdCalculate />
+                            </span>
+                            <span>Bill</span>
                           </button>
                         </div>
                       </td>
